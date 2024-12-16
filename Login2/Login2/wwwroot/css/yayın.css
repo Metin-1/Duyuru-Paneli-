@@ -1,0 +1,66 @@
+﻿body {
+    background-color: #000000; /* Arka plan rengini siyah yapar */
+    color: #ff0000; /* Metin rengini kırmızı yapar */
+    height: 100vh; /* Sayfa yüksekliğini tam yapar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* İçeriği dikey olarak ortalar */
+}
+
+.readonly-textbox-container {
+    height: calc(100vh / 5); /* Ekrana 5 tane sığacak şekilde yüksekliği ayarla */
+    overflow: hidden; /* Taşan metni gizler */
+    position: relative; /* İçerideki öğeleri konumlandırmak için */
+    margin: 0.5rem 0; /* Textbox'lar arasında küçük bir boşluk */
+    padding: 0;
+}
+
+.readonly-textbox {
+    background-color: #000000; /* Arka planı siyah */
+    color: #ff0000; /* Metin rengini kırmızı yapar */
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    font-size: 1.25rem;
+    padding: 10px;
+    resize: none;
+    width: 100%; /* Yatayda tam genişlik */
+    height: 100%; /* Yüksekliği kapsayıcıya göre sabit tutar */
+    box-sizing: border-box; /* Padding ve border'ı genişliğe dahil eder */
+    margin: 0;
+    overflow: hidden; /* Taşan metni gizler */
+    position: relative;
+}
+
+.scrolling-content {
+    position: absolute;
+    width: 100%;
+    animation: scroll-up 10s linear infinite; /* Sürekli yukarı kayan bir animasyon */
+}
+
+@keyframes scroll-up {
+    0% {
+        top: 100%; /* Metin aşağıdan başlar */
+    }
+
+    100% {
+        top: -100%; /* Metin yukarı kayar ve ekrandan çıkar */
+    }
+}
+
+ul {
+    list-style-type: none; /* Liste işaretlerini kaldırır */
+    padding-left: 0; /* Varsayılan sol boşluğu kaldırır */
+}
+
+li {
+    margin-bottom: 10px; /* Liste öğeleri arasında biraz boşluk bırakır */
+}
+
+#zaman {
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 1.5rem;
+}

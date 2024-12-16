@@ -1,0 +1,79 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Seçili Duyurular</title>
+    <link href="~/css/yayın.css" rel="stylesheet">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 style="color:red; text-align:center;">VELİEFENDİ HİPODROMU</h1>
+        <div id="zaman"></div>
+    </div>
+
+    <div class="container my-5">
+        <ul class="list-unstyled" id="announcements">
+            <!-- JSON'dan gelen duyurular burada gösterilecek -->
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            function tarihSaat() {
+                var date = new Date().toLocaleString('tr-TR');
+                document.getElementById("zaman").innerHTML = date;
+            }
+            setInterval(tarihSaat, 1000);
+
+            function updateAnnouncements() {
+                $.ajax({
+                    url: '/Jsondb/duyurular.json',  // JSON dosyanızın doğru yolunu belirtin
+                    type: 'GET',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+                        var announcementsContainer = $('#announcements');
+                        announcementsContainer.empty();
+
+                        data.duyurular.forEach(function (duyuru) {
+                            if (duyuru.isChecked) {
+                                var container = $('<div class="readonly-textbox-container"></div>');
+                                var textarea = $('<div class="readonly-textbox"></div>');
+                                var scrollingContent = $('<div class="scrolling-content"></div>').text(duyuru.text);
+
+                                textarea.append(scrollingContent);
+                                container.append(textarea);
+                                announcementsContainer.append('<li></li>').append(container);
+
+                                // Metin yüksekliği konteyneri aşarsa animasyonu etkinleştir
+                                if (scrollingContent.outerHeight() > textarea.height()) {
+                                    scrollingContent.addClass('scrolling-content');
+                                } else {
+                                    scrollingContent.css('position', 'static');
+                                }
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.log('Error fetching JSON data', err);
+                    }
+                });
+            }
+
+            updateAnnouncements();
+            setInterval(updateAnnouncements, 60000); // Duyuruları 1 dakika arayla yeniler
+        });
+    </script>
+</body>
+</html>

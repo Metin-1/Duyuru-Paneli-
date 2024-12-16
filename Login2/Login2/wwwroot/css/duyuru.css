@@ -1,0 +1,24 @@
+﻿@media screen and (min-width: 601px) {
+    body {
+        font-size: 1.9vw !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 3vw !important;
+    }
+}
+
+body {
+    margin-top: 10px;
+    height: 1070px;
+    background-color: black;
+}
+
+.col-md-12 {
+    color: white;
+    font-size: 1.96vw;
+    font-weight: bold;
+    border: 2px solid white;
+}
